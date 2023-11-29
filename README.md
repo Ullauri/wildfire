@@ -7,4 +7,6 @@ From project root run `make run`.
 - development time: ~(3 - 4) hours
 - edit `.env` file as needed
 - run `make help` for list of commands
-- TODO: dockerize
+- `TODO`:
+    - dockerize
+    - set up CICD
