@@ -18,19 +18,16 @@ func AddIndexRoutes(g *gin.RouterGroup, namesClient clients.NamesClient, jokesCl
 			return
 		}
 
-		// FIXME: curl "http://joke.loc8u.com:8888/joke?limitTo=nerdy&firstName=John&lastName=Doe" not working
-		ctx.String(200, "Hi "+randomName.FirstName+" "+randomName.LastName)
+		joke, err := jokesClient.GetJoke(ctx, &randomName.FirstName, &randomName.LastName)
+		if err != nil {
+			ctx.JSON(500, gin.H{"jokesClientError": err.Error()})
+			return
+		} else if joke == nil {
+			ctx.JSON(500, gin.H{"jokesClientError": "joke was nil"})
+			return
+		}
 
-		// joke, err := jokesClient.GetJoke(ctx, &randomName.FirstName, &randomName.LastName)
-		// if err != nil {
-		// 	ctx.JSON(500, gin.H{"jokesClientError": err.Error()})
-		// 	return
-		// } else if joke == nil {
-		// 	ctx.JSON(500, gin.H{"jokesClientError": "joke was nil"})
-		// 	return
-		// }
-
-		// ctx.String(200, joke.Value.Joke)
+		ctx.String(200, joke.Value.Joke)
 	})
 
 	g.GET("/health", func(ctx *gin.Context) {

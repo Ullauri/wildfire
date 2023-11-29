@@ -31,7 +31,7 @@ func TestIndexHandlers(t *testing.T) {
 			t.Errorf("expected status OK; got %v", w.Code)
 		}
 
-		expected := "Hi John Doe"
+		expected := "This is a joke"
 		if w.Body.String() != expected {
 			t.Errorf("expected body %q; got %q", expected, w.Body.String())
 		}
